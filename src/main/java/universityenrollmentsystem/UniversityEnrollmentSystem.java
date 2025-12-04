@@ -6,11 +6,11 @@ package universityenrollmentsystem;
 
 /**** ENTER HERE YOUR DETAILS:*******
          * 
-         * FIRST NAME:
+         * FIRST NAME: Delaksan
          * 
-         * LAST NAME:
+         * LAST NAME: Sritharan
          * 
-         * STUDENT ID:
+         * STUDENT ID: 20240242
          * 
          */
 
@@ -25,6 +25,6 @@ public class UniversityEnrollmentSystem {
         }
         
         System.out.println("System saving and shutting down. Goodbye!");
-    
+
     }
 }
