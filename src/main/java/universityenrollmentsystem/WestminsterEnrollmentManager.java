@@ -32,6 +32,7 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
         System.out.println("To Add a new person, press 1");
         System.out.println("To Print the list of all people press 2");
         System.out.println("To Open GUI, press 3");
+        System.out.println("To Edit Student Modules, press 4");
 
         
         // Switch based on selected option
@@ -66,6 +67,11 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
             // GUI
             case 3:
                 this.runGUI();
+                break;
+
+            //Edit Student Modules
+            case 4:
+                this.editStudentModules();
                 break;
             
             default:
@@ -232,14 +238,36 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
                 Student student = (Student) person;
 
                 System.out.println("Course Title: " + student.getCourseTitle() +
-                        "Number of modules: " + student.getModulesEnrolled()
+                        "\nNumber of modules: " + student.getModulesEnrolled()
                 );
 
+                int newModules = -1;
+                boolean valid = false;
 
+                while (!valid){
+                    System.out.println("Enter new number of modules: ");
+                    try{
+                        newModules = input.nextInt();
+                        input.nextLine(); //clear buffer
 
-
+                        if (newModules < 0 ){
+                            System.out.println("Modules cannot be negative. Try again");
+                        }else {
+                            valid = true;
+                        }
+                    }catch (InputMismatchException e){
+                        System.out.println("Invalid input. Please enter a positive number.");
+                        input.nextLine(); //clear invalid input
+                    }
+                }
+                student.setModulesEnrolled(newModules);
+                System.out.println("Modules updated successfully!");
+                break;
             }
+        }
 
+        if (!found){
+            System.out.println("Student with ID " + ID + " not found.");
         }
 
 
