@@ -73,6 +73,12 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
             case 4:
                 this.editStudentModules();
                 break;
+
+            // Edit Student Details
+            case 5:
+                this.editStudentDetails();
+                break;
+
             
             default:
                 System.out.println("Invalid option selected.");
@@ -274,5 +280,104 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
 
     }
 
+    @Override
+    public void editStudentDetails() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the ID of the person whose details you want to edit: ");
+        String ID = input.next();
+
+        boolean found = false;
+        for (Person person: personList){
+            if (person.getID().equalsIgnoreCase(ID)){
+                found = true;
+
+                //if NOT a Student
+                if (!(person instanceof Student)){
+                    System.out.println("This person is not a student. Only student details can be edited");
+                    return;
+                }
+
+                Student student = (Student) person;
+
+                System.out.println("Course Title: " + ((Student) person).getCourseTitle()
+                        + "\nModules Enrolled: " + ((Student) person).getModulesEnrolled());
+
+                System.out.println("\nEdit Student Details");
+                System.out.println("Press 1 to change course title");
+                System.out.println("Press 2 to change number of modules");
+                System.out.println("Press 3 to change both");
+
+                int choice = -1;
+                try{
+                    choice = input.nextInt();
+                    input.nextLine(); //clear buffer
+                }catch (InputMismatchException e){
+                    System.out.println("Invalid choice");
+                    return;
+                }
+
+                switch (choice){
+                    case 1:
+                        System.out.println("Enter new course title: ");
+                        String newCourse = input.nextLine();
+                        student.setCourseTitle(newCourse);
+                        System.out.println("Course title updated successfully!");
+                        break;
+
+                    case 2:
+                        System.out.println("Enter new number of modules (1–8):");
+                        int newModules;
+                        try {
+                            newModules = input.nextInt();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid number. Modules NOT updated.");
+                            return;
+                        }
+
+                        if (newModules < 1 || newModules > 8) {
+                            System.out.println("Error: Module count must be between 1 and 8. Value NOT changed.");
+                        } else {
+                            student.setModulesEnrolled(newModules);
+                            System.out.println("Modules updated successfully!");
+                        }
+                        break;
+
+                    case 3:
+                        // Change BOTH
+                        System.out.println("Enter new course title:");
+                        String bothCourse = input.nextLine();
+
+                        System.out.println("Enter new number of modules (1–8):");
+                        int bothModules;
+                        try {
+                            bothModules = input.nextInt();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid number. Only course title updated.");
+                            student.setCourseTitle(bothCourse);
+                            return;
+                        }
+
+                        if (bothModules < 1 || bothModules > 8) {
+                            System.out.println("Error: Module count must be between 1 and 8. Only course title updated.");
+                            student.setCourseTitle(bothCourse);
+                        } else {
+                            student.setCourseTitle(bothCourse);
+                            student.setModulesEnrolled(bothModules);
+                            System.out.println("Both course title and modules updated successfully!");
+                        }
+
+                        break;
+
+                    default:
+                        System.out.println("Invalid option chosen. No changes made.");
+                }
+                return;
+            }
+        }
+        if (!found){
+            System.out.println("No person found with ID " + ID + ".");
+        }
+
+    }
 }
 
