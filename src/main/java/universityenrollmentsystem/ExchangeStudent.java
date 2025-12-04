@@ -6,10 +6,12 @@ public class ExchangeStudent extends Student{
     private int exchangeDurationMonths;
     private boolean hasScholarship;
 
-    public ExchangeStudent(String name, String surname,String homeUniversity) {
+    public ExchangeStudent(String name, String surname,String homeUniversity,String homeCountry) {
         super(name, surname);
         this.homeUniversity = homeUniversity;
         this.homeCountry = homeCountry;
+        this.exchangeDurationMonths = 1;
+        this.hasScholarship = false;
     }
 
     public String getHomeUniversity() {
@@ -33,7 +35,12 @@ public class ExchangeStudent extends Student{
     }
 
     public void setExchangeDurationMonths(int exchangeDurationMonths) {
-        this.exchangeDurationMonths = exchangeDurationMonths;
+        if (exchangeDurationMonths < 1){
+            System.out.println("Exchange duration must be at least 1 month. Setting to 1.");
+            this.exchangeDurationMonths = 1;
+        }else {
+            this.exchangeDurationMonths = exchangeDurationMonths;
+        }
     }
 
     public boolean isHasScholarship() {
@@ -44,9 +51,20 @@ public class ExchangeStudent extends Student{
         this.hasScholarship = hasScholarship;
     }
 
+    public boolean isLongTermExchange(){
+        return exchangeDurationMonths >=6;
+    }
+
     @Override
     public String toString(){
-        return super.toString();
+        String durationType = isLongTermExchange()? "Long-term": "Short-term";
+        return super.toString()+
+                "\nHome University: " + homeUniversity +
+                "\nHome Country: " + homeCountry +
+                "\nExchange Duration: " + exchangeDurationMonths + " months" +
+                "\nExchange Type: " + durationType +
+                "\nHas Scholarship: " + (hasScholarship ? "Yes" : "No");
+
     }
 
 }
