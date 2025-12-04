@@ -33,8 +33,10 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
         System.out.println("To Print the list of all people press 2");
         System.out.println("To Open GUI, press 3");
         System.out.println("To Edit Student Modules, press 4");
+        System.out.println("To Edit Student Details, press 5");
 
-        
+
+
         // Switch based on selected option
         Scanner s = new Scanner(System.in);
         int choice;
@@ -214,6 +216,7 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
         
         
         if (!personList.isEmpty()){
+            Collections.sort(personList);
             System.out.println("\n--- ENROLLED PEOPLE LIST ---");
             for(Person member : personList) {
                 System.out.println(member.toString());
@@ -378,6 +381,30 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
             System.out.println("No person found with ID " + ID + ".");
         }
 
+    }
+
+    public void displayOnlyStudentsSorted(){
+
+        ArrayList <Person> studentList = new ArrayList<>();
+
+        for (Person p: personList){
+            if (p instanceof Student){
+                studentList.add(p);
+            }
+        }
+
+        Collections.sort(studentList);
+
+        if (studentList.isEmpty()) {
+            System.out.println("No students in the system.");
+            return;
+        }
+
+        System.out.println("\n--- STUDENTS ONLY (SORTED) ---");
+        for (Person student : studentList) {
+            System.out.println(student.toString());
+        }
+        System.out.println("-------------------------------\n");
     }
 }
 
