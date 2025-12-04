@@ -7,10 +7,7 @@ package universityenrollmentsystem;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 
 
 public class UniversityTableGUI extends JFrame {
@@ -43,6 +40,28 @@ public class UniversityTableGUI extends JFrame {
 
         // add a button on the bottom
         JButton button = new JButton("Statistics");
+        button.addActionListener(e -> {
+            int totalPeople = list.size();
+            int totalStudents = 0;
+            int totalLectures = 0;
+
+            for (Person p: list){
+                if(p instanceof Student){
+                    totalStudents++;
+                } else if (p instanceof Lecturer) {
+                    totalLectures++;
+                }
+            }
+
+            String message = "Total People: " + totalPeople
+                    + "\nTotal Students: " + totalStudents
+                    + "\nTotal Lectures: " + totalLectures;
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,message,"University Statistics", JOptionPane.INFORMATION_MESSAGE
+
+            );
+        });
         
         // add the panel to the frame
         add(scrollPane,BorderLayout.CENTER); 
