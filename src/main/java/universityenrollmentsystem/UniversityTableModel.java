@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 public class UniversityTableModel extends AbstractTableModel{
     
     // TASK 04: The columnNames array needs to be modified.
-    private String[] columnNames = {"Name", "Surname", "Date of Birth", "Role"}; 
+    private String[] columnNames = {"Name", "Surname", "Date of Birth", "Role","Details"};
     private ArrayList<Person> list; 
     
     public UniversityTableModel(ArrayList<Person> personList){
@@ -44,13 +44,26 @@ public class UniversityTableModel extends AbstractTableModel{
          temp = list.get(rowIndex).getStringDate(); 
       } 
       else if (columnIndex == 3) { 
-          if(list.get(rowIndex) instanceof Student)
-            temp = "Student"; 
-          else if(list.get(rowIndex) instanceof Lecturer)
-            temp = "Lecturer";
-          
-      } 
-      return temp; 
+          if(list.get(rowIndex) instanceof Student) {
+              temp = "Student";
+          }
+          else if(list.get(rowIndex) instanceof Lecturer) {
+              temp = "Lecturer";
+          }else {
+              temp =  "N/A";
+          }
+      } else if (columnIndex == 4) {
+            Person p = list.get(rowIndex);
+
+            if (p instanceof Student){
+                temp = ((Student) p).getCourseTitle();
+            } else if (p instanceof  Lecturer) {
+                temp = ((Lecturer) p).getSpecialisation();
+            }else {
+                temp = "N/A";
+            }
+        }
+        return temp;
         
     }
     
