@@ -229,6 +229,14 @@ public class WestminsterEnrollmentManager implements EnrollmentManager{
         for (Person person: personList){
             if ( person instanceof Student && person.getID().equalsIgnoreCase(ID)){
                 found = true;
+                Student student = (Student) person;
+
+                System.out.println("Course Title: " + student.getCourseTitle() +
+                        "Number of modules: " + student.getModulesEnrolled()
+                );
+
+
+
 
             }
 
